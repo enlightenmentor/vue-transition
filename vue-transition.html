@@ -1,5 +1,41 @@
 <link rel="import" href="bower_components/polymer/polymer-element.html">
 
+<!--
+`<vue-transition>` is a wrapper element that helps you easily 
+and in more standardized way apply CSS transitions and animations 
+to it's child elements. Its highly inspired by Vue's `<transition>` _[element](https://vuejs.org/v2/api/#transition)_.
+
+You can apply 3 different types of transitions/animations to element: 
+append, enter, leave. You control those animation by specifying style 
+on 3 classes for each type of transition/animation: before, during and 
+after it.
+
+Example:
+
+  <vue-transition>
+    <div id="myDiv"></div>
+  </vue-transition>
+
+### Styling
+
+The following classes you need to use to specify transitions/animations: 
+
+Class | Description
+------|------------
+`.vue-append` | Styling in the beginning of the animation when the element is appended to the page
+`.vue-append-to` | Styling in the end of the appending animation.
+`.vue-append-active` | Styling during whole appending animation.
+`.vue-enter` | Styling in the beginning of entering active element state.
+`.vue-enter-to` | Styling in the end of the entering animation.
+`.vue-enter-active` | Styling during whole entering animation.
+`.vue-leave` | Styling in the beginning of leaving active element state.
+`.vue-leave-to` | Styling in the end of the leaving animation.
+`.vue-leave-active` | Styling during whole leaving animation.
+
+@element vue-transition
+@demo demo/index.html
+-->
+
 <dom-module id="vue-transition">
   <template>
     <style>
@@ -13,14 +49,6 @@
   </template>
 
   <script>
-    /**
-     * `vue-transition`
-     * Vue transition implementation in Polymer 2.0
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
     class VueTransition extends Polymer.Element {
       static get is() {
         return 'vue-transition';
