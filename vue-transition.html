@@ -1,0 +1,141 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+
+<dom-module id="vue-transition">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+
+    <slot></slot>
+
+  </template>
+
+  <script>
+    /**
+     * `vue-transition`
+     * Vue transition implementation in Polymer 2.0
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class VueTransition extends Polymer.Element {
+      static get is() {
+        return 'vue-transition';
+      }
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: 'vue'
+          },
+          appear: {
+            type: Boolean,
+            value: false
+          },
+          active: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        if (this.appear)
+          this.appearing();
+      }
+
+      toggle() {
+        this.active = !this.active;
+        if (this.active)
+          this.enter();
+        else
+          this.leave();
+      }
+
+      appearing() {
+        this.$emit('vue-before-appear');
+        this.classList.add(this.name + '-appear');
+        this.classList.add(this.name + '-appear-active');
+
+        this.callback = function() {
+          this.classList.remove(this.name + '-appear-to');
+          this.classList.remove(this.name + '-appear-active');
+          this.$emit('vue-after-appear');
+        }.bind(this);
+        this.$once('transitionend', this.callback);
+        this.$once('animationend', this.callback);
+
+        window.setTimeout(function() {
+          this.classList.remove(this.name + '-appear');
+          this.classList.add(this.name + '-appear-to');
+          this.$emit('vue-appear');
+        }.bind(this), 0);
+      }
+
+      enter() {
+        this.$emit('vue-before-enter');
+        this.classList.remove(this.name + '-leave-active');
+        this.classList.remove(this.name + '-leave-to');
+        this.classList.add(this.name + '-enter');
+        this.classList.add(this.name + '-enter-active');
+
+        this.callback = function() {
+          this.classList.remove(this.name + '-enter-active');
+          this.$emit('vue-after-enter');
+        }.bind(this);
+        this.$once('transitionend', this.callback);
+        this.$once('animationend', this.callback);
+
+        window.setTimeout(function() {
+          this.classList.remove(this.name + '-enter');
+          this.classList.add(this.name + '-enter-to');
+          this.$emit('vue-enter');
+        }.bind(this), 0);
+      }
+
+      leave() {
+        this.$emit('vue-before-leave');
+        this.classList.remove(this.name + '-enter-active');
+        this.classList.remove(this.name + '-enter-to');
+        this.classList.add(this.name + '-leave');
+        this.classList.add(this.name + '-leave-active');
+
+        this.callback = function(e) {
+          this.classList.remove(this.name + '-leave-active');
+          this.$emit('vue-after-leave');
+        }.bind(this);
+        this.$once('transitionend', this.callback);
+        this.$once('animationend', this.callback);
+
+        window.setTimeout(function() {
+          this.classList.remove(this.name + '-leave');
+          this.classList.add(this.name + '-leave-to');
+          this.$emit('vue-leave');
+        }.bind(this), 0);
+      }
+
+      $emit(name, payload) {
+        this.dispatchEvent(new CustomEvent(name, {
+          composed: true,
+          bubbles: true,
+          detail: payload
+        }));
+      }
+
+      $once(name, callback) {
+        const wrapCall = function() {
+          this.removeEventListener(name, wrapCall);
+          callback();
+        }.bind(this);
+        this.addEventListener(name, wrapCall);
+      }
+    }
+
+    window.customElements.define(VueTransition.is, VueTransition);
+  </script>
+</dom-module>

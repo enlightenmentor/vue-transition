@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>vue-transition demo</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../vue-transition.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+      vue-transition {
+        margin-bottom: 400px;
+      }
+      @keyframes Appear {
+        0% {
+          opacity: 0;
+          transform: translateX(-300px) scale(0.5);
+        }
+        50% {
+          opacity: 0.75;
+          transform: translateX(0px) scale(0.6);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes Enter {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(100px, 0px) scale(1.2);
+        }
+        50% {
+          transform: translate(165px, 35px) scale(1.4);
+        }
+        75% {
+          transform: translate(200px, 100px) scale(1.6);
+        }
+        100% {
+          transform: translate(200px, 200px) scale(1.8);
+        }
+      }
+      @keyframes Leave {
+        0% {
+          transform: translate(200px, 200px) scale(1.8);
+        }
+        25% {
+          transform: translate(100px, 200px) scale(1.6);
+        }
+        50% {
+          transform: translate(35px, 165px) scale(1.4);
+        }
+        75% {
+          transform: translate(0px, 100px) scale(1.2);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(1);
+        }
+      }
+      .vue-appear-active {
+        animation: Appear 1s;
+      }
+      .vue-enter-active {
+        animation: Enter 1s linear;
+      }
+      .vue-enter-to {
+        transform: translate(200px, 200px) scale(1.8);
+      }
+      .vue-leave-active {
+        animation: Leave 1s linear;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic vue-transition demo</h3>
+      <demo-snippet>
+        <template>
+          <vue-transition appear>
+            <h1>Hello Vue-Transition</h1>
+          </vue-transition>
+          <br>
+          <button onclick="toggleTransition()">Toggle</button>
+          <script>
+            const vueTransition = document.querySelector('vue-transition');
+            function toggleTransition() {
+              vueTransition.toggle();
+            }
+            window.addEventListener('vue-before-appear', (e) => console.log('before-appear: '+performance.now()) );
+            window.addEventListener('vue-before-enter', () => console.log('before-enter: '+performance.now()) );
+            window.addEventListener('vue-before-leave', () => console.log('before-leave: '+performance.now()) );
+            window.addEventListener('vue-appear', () => console.log('appear: '+performance.now()) );
+            window.addEventListener('vue-enter', () => console.log('enter: '+performance.now()) );
+            window.addEventListener('vue-leave', () => console.log('leave: '+performance.now()) );
+            window.addEventListener('vue-after-appear', () => console.log('after-appear: '+performance.now()) );
+            window.addEventListener('vue-after-enter', () => console.log('after-enter: '+performance.now()) );
+            window.addEventListener('vue-after-leave', () => console.log('after-leave: '+performance.now()) );
+          </script>
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+
+</html>
