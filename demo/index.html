@@ -13,71 +13,80 @@
     <link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../vue-transition.html">
 
-    <style is="custom-style" include="demo-pages-shared-styles">
-      vue-transition {
-        margin-bottom: 400px;
-      }
-      @keyframes Appear {
-        0% {
-          opacity: 0;
-          transform: translateX(-300px) scale(0.5);
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+        vue-transition {
+          margin-bottom: 400px;
         }
-        50% {
-          opacity: 0.75;
-          transform: translateX(0px) scale(0.6);
+        
+        @keyframes Appear {
+          0% {
+            opacity: 0;
+            transform: translateX(-300px) scale(0.5);
+          }
+          50% {
+            opacity: 0.75;
+            transform: translateX(0px) scale(0.6);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
-        100% {
-          opacity: 1;
-          transform: scale(1);
+        
+        @keyframes Enter {
+          0% {
+            transform: translate(0, 0) scale(1);
+          }
+          25% {
+            transform: translate(75px, 0px) scale(1.2);
+          }
+          50% {
+            transform: translate(150px, 50px) scale(1.4);
+          }
+          75% {
+            transform: translate(200px, 125px) scale(1.6);
+          }
+          100% {
+            transform: translate(200px, 200px) scale(1.8);
+          }
         }
-      }
-      @keyframes Enter {
-        0% {
-          transform: translate(0, 0) scale(1);
+        
+        @keyframes Leave {
+          0% {
+            transform: translate(200px, 200px) scale(1.8);
+          }
+          25% {
+            transform: translate(125px, 200px) scale(1.6);
+          }
+          50% {
+            transform: translate(50px, 150px) scale(1.4);
+          }
+          75% {
+            transform: translate(0px, 75px) scale(1.2);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
         }
-        25% {
-          transform: translate(100px, 0px) scale(1.2);
+        
+        .vue-appear-active {
+          animation: Appear 1s;
         }
-        50% {
-          transform: translate(165px, 35px) scale(1.4);
+        
+        .vue-enter-active {
+          animation: Enter 0.3s linear;
         }
-        75% {
-          transform: translate(200px, 100px) scale(1.6);
-        }
-        100% {
+        
+        .vue-enter-to {
           transform: translate(200px, 200px) scale(1.8);
         }
-      }
-      @keyframes Leave {
-        0% {
-          transform: translate(200px, 200px) scale(1.8);
+        
+        .vue-leave-active {
+          animation: Leave 0.3s linear;
         }
-        25% {
-          transform: translate(100px, 200px) scale(1.6);
-        }
-        50% {
-          transform: translate(35px, 165px) scale(1.4);
-        }
-        75% {
-          transform: translate(0px, 100px) scale(1.2);
-        }
-        100% {
-          transform: translate(0px, 0px) scale(1);
-        }
-      }
-      .vue-appear-active {
-        animation: Appear 1s;
-      }
-      .vue-enter-active {
-        animation: Enter 1s linear;
-      }
-      .vue-enter-to {
-        transform: translate(200px, 200px) scale(1.8);
-      }
-      .vue-leave-active {
-        animation: Leave 1s linear;
-      }
-    </style>
+      </style>
+    </custom-style>
   </head>
 
   <body>
