@@ -2,6 +2,7 @@
   "name": "vue-transition",
   "description": "Vue-like transition element implementation in Polymer",
   "main": "vue-transition.html",
+  "license": "MIT",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },
